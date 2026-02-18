@@ -1,0 +1,52 @@
+<h1>{{ post.title }}</h1>
+<p>
+<b>Author:</b> {{ post.author }}
+</p>
+<p>
+<b>Created At:</b> {{ post.created_at|date:"d M Y" }}
+</p>
+<p>
+<b>Last Modified:</b> {{ post.last_modified|date:"d M Y" }}
+</p>
+<p><b>Categories:</b>
+{% for cat in post.categories.all %}
+  {{ cat.name }}
+{% endfor %}
+</p>
+<hr>
+<p>{{ post.content }}</p>
+<hr>
+<div>
+<a href="{% url 'post_list' %}">Back to All Blogs</a>
+</div>
+<br>
+{% if user.is_staff %}
+<div style="display: flex; gap:15px;">
+<a href="{% url 'post_update' post.id %}">Edit</a>
+<a href="{% url 'post_delete' post.id %}">Delete</a>
+</div>
+
+{% endif %}
+<hr>
+<h3>Comments</h3>
+
+{% for comment in comments %}
+<p><b>{{ comment.name }}</b> - {{ comment.created_at }}</p>
+<p>{{ comment.body }}</p>
+<hr>
+
+{% empty %}
+<p>No comments yet.</p>
+
+{% endfor %}
+<h3>Add Comment</h3>
+<form method="POST">
+
+    {% csrf_token %}
+
+    {{ form.as_p }}
+<button type="submit">Submit Comment</button>
+</form>
+ 
+ 
+ 

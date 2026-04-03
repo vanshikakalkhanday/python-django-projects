@@ -1,0 +1,42 @@
+<h1>All Blog Posts</h1>
+<hr>
+
+{% for post in posts %}
+<h2>
+<a href="{% url 'post_detail' post.id %}">
+
+      {{ post.title }}
+</a>
+</h2>
+<p>
+<b>Author:</b> {{ post.author }} |
+<b>Posted On:</b> {{ post.created_at|date:"d M Y" }} |
+<b>Last Modified:</b> {{ post.last_modified|date:"d M Y" }}
+</p>
+<p>
+
+    {{ post.excerpt }}
+</p>
+<a href="{% url 'post_detail' post.id %}">Read Full Post</a>
+<hr>
+
+{% endfor %}
+<div style="margin-top:20px; text-align:center;">
+
+    {% if posts.has_previous %}
+<a href="?page={{ posts.previous_page_number }}">Previous</a>
+
+    {% endif %}
+<span style="margin:0 10px;">
+
+        Page {{ posts.number }} of {{ posts.paginator.num_pages }}
+</span>
+
+    {% if posts.has_next %}
+<a href="?page={{ posts.next_page_number }}">Next</a>
+
+    {% endif %}
+</div>
+ 
+Under Construction
+ 
